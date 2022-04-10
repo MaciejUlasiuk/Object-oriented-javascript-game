@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space invasion</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container" data-container>
+      
+      <section class="information">
+        <article class="information__content" data-score></article>
+        <article class="information__content" data-lives></article>
+      </section>
+    </div>
+    <div class="modal hide" data-modal>
+      <div class="modal__content">
+        <p class="modal__text" data-score-info>
+          You loose! Start new game!
+        </p>
+        <button class="modal__button" data-button>New Game</button>
+      </div>
+      
+    </div>
+    <div class="pause hide" data-pause>
+      <div class="pausemenu__content">
+        <button class="modal__button" data-resumeBtn>Resume</button>
+      <button class="modal__button">options</button>
+      <button class="modal__button">quit</button>
+      <button class="modal__button">statistics</button>
+    </div>
+    </div>
+    </div>
+    <div class="main-menu hide" data-mainmenu>
+      <div class="header-main-menu">
+        <h1>Space Invaders</h1>
+        <p>By Maciej Ulasiuk</p>
+      </div>
+      <div class="main-menu-content">
+        <button class="main-menu-button" data-startGame>Start game</button>
+        <button class="main-menu-button">options</button>
+        <button class="main-menu-button">highscores</button>
+        <div class="main-menu-content-links">
+          <a href="https://github.com/hasaton"><img src="./images/GitHub-Mark.png" alt="Github" class="img-a"></a>
+          <a href="https://www.youtube.com/watch?v=W9GXqCBAZb0"><img src="./images/youtube-logo.png" alt="youtube" class="img-a"></a>
+        </div>
+        <div class="main-menu-playthrough">PLAYTHROUGH</div>
+      </div>
+    <script type="module" src="./js/Game.js"></script>
+    <script src="https://kit.fontawesome.com/3043a46c9b.js" crossorigin="anonymous"></script>
+
+  </body>
+</html>

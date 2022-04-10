@@ -1,0 +1,273 @@
+:root {
+  --primary-color: #09fcfd;
+  --secondary-color: #510303;
+  --size-unit: 64px;
+  --ships-animation-time: 200ms;
+  --explosions-animation-time: 600ms;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
+  
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: black;
+  position: relative;
+  background-image: url('../images/stars-galaxy.gif');
+}
+
+.information {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  font-size: 32px;
+  z-index: 2;
+  position: relative;
+}
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__text {
+  font-size: 42px;
+  text-align: center;
+}
+
+.modal__button {
+  padding: 30px 15px;
+  background-color: black;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 5vw;
+  margin-top: 2vh;
+  outline: none;
+  transition: box-shadow 0.1s ease-in;
+}
+.modal__button:hover {
+  box-shadow: 0px 0px 20px 5px var(--primary-color);
+}
+
+.spaceship {
+  width: var(--size-unit);
+  height: var(--size-unit);
+  background-image: url('../images/ship.png');
+  animation: move-8-units-X var(--ships-animation-time) steps(8) infinite;
+  
+  position: fixed;
+}
+.enemy {
+  width: var(--size-unit);
+  height: var(--size-unit);
+  background-image: url('../images/enemy.png');
+  animation: move-5-units-X var(--ships-animation-time) steps(5) infinite;
+  
+  z-index: 1;
+  position: fixed;
+}
+.enemy--big {
+  width: calc(var(--size-unit) * 2);
+  height: calc(var(--size-unit) * 2);
+  background-image: url('../images/enemy-big.png');
+  animation: move-16-units-X var(--ships-animation-time) steps(8) infinite;
+  position: fixed;
+}
+.explosion {
+  width: var(--size-unit);
+  height: var(--size-unit);
+  background-image: url('../images/explosion.png');
+  animation: move-17-units-X var(--explosions-animation-time) steps(17) forwards;
+  position: fixed;
+}
+.explosion--big {
+  width: calc(var(--size-unit) * 2);
+  height: calc(var(--size-unit) * 2);
+  background-image: url('../images/explosion-big.png');
+  animation: move-34-units-X var(--explosions-animation-time) steps(17) forwards;
+  position: fixed;
+}
+
+.missile {
+  background-image: url('../images/missile.png');
+  background-size: cover;
+  width: 12px;
+  height: 24px;
+  position: absolute;
+}
+.pause{
+  position: fixed;
+  width: 70vw;
+  height: 70vh;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: black;
+  
+  
+  border: 2px var(--primary-color) solid;
+  border-radius: 2%;
+}
+.pausemenu__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  opacity: 1;
+}
+.main-menu{
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  
+  min-width: 50vw;
+  min-height: 50vh;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border: 2px var(--primary-color) solid;
+  border-radius: 2%;
+  animation: main-menu-animation 5s forwards infinite;
+  background-color: black;
+}
+.main-menu h1{
+  padding: 20px;
+  color: darkred;
+  font-size: 400%;
+  font-family: 'Orbitron', sans-serif;
+}
+.main-menu p{
+  color: #a02c2c;
+  font-size: 200%;
+  padding: 20px;
+  font-family: 'Orbitron', sans-serif;
+}
+.main-menu-content{
+  display: flex;
+  flex-direction: column;
+  
+  
+}
+.main-menu-button{
+  padding: 30px 15px;
+  background-color: black;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 2vw;
+  margin-top: 2vh;
+  outline: none;
+  transition: box-shadow 0.1s ease-in;
+}
+.main-menu-content-links{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+.mein-menu-playthrough{
+  color: var(--secondary-color);
+}
+.img-a{
+  width: 50px;
+  height: 50px;
+}
+.main-menu-button:hover{
+  box-shadow: 0px 0px 20px 5px var(--primary-color);
+}
+@keyframes main-menu-animation {
+  0% {
+    box-shadow: 0px 0px 0px 0px var(--primary-color)
+  }
+  50% {
+    box-shadow: 0px 0px 20px 5px var(--primary-color)
+  }
+  100% {
+    box-shadow: 0px 0px 0px 0px var(--primary-color)
+  }
+}
+
+@keyframes move-8-units-X {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: calc(var(--size-unit) * -8);
+  }
+}
+@keyframes move-5-units-X {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: calc(var(--size-unit) * -5);
+  }
+}
+@keyframes move-16-units-X {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: calc(var(--size-unit) * -16);
+  }
+}
+@keyframes move-17-units-X {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: calc(var(--size-unit) * -17);
+  }
+}
+@keyframes move-34-units-X {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: calc(var(--size-unit) * -34);
+  }
+}
+
+.hide {
+  display: none;
+}
+
+.hit {
+  background-color: var(--secondary-color);
+}
