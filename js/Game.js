@@ -35,6 +35,8 @@ class Game {
         this.spaceship.initSpaceship()
         
         this.handleEventListeners()
+        this.htmlElements.MainMenu.classList.add('hide')
+        this.htmlElements.container.style.backgroundImage = 'none'
        this.startGame()
        
 
@@ -48,10 +50,11 @@ class Game {
     showMenu()
     {
         this.htmlElements.MainMenu.classList.remove('hide')
+        this.handleEventListeners()
     }
 
     handleEventListeners(){
-        
+        this.htmlElements.MainMenu.addEventListener('click', () => this.start())
     }
     handleGameEventListeners(){
         document.addEventListener("visibilitychange", this.stopGame);
