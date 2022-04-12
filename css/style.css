@@ -70,7 +70,7 @@ body {
   border: 3px solid var(--primary-color);
   color: var(--primary-color);
   cursor: pointer;
-  font-size: 5vw;
+  font-size: 3vw;
   margin-top: 2vh;
   outline: none;
   transition: box-shadow 0.1s ease-in;
@@ -149,6 +149,16 @@ body {
   transform: translate(-50%,-50%);
   opacity: 1;
 }
+.fixed-centered-menu{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  opacity: 1;
+}
 .main-menu{
   display: flex;
   position: absolute;
@@ -156,7 +166,6 @@ body {
   justify-content: center;
   justify-items: center;
   align-items: center;
-  
   min-width: 50vw;
   min-height: 50vh;
   left: 50%;

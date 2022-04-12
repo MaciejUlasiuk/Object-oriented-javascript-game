@@ -36,7 +36,7 @@ class Game {
         
         this.handleEventListeners()
         this.htmlElements.MainMenu.classList.add('hide')
-        this.htmlElements.container.style.backgroundImage = 'none'
+        
        this.startGame()
        
 
@@ -59,6 +59,8 @@ class Game {
     handleGameEventListeners(){
         document.addEventListener("visibilitychange", this.stopGame);
         this.htmlElements.resumeButton.addEventListener('click', () => this.resumeGame())
+        window.addEventListener('keydown', (e) => this.spaceship.keyboardMoveLeft(e))
+        window.addEventListener('keydown', (e) => this.spaceship.keyboardMoveRight(e))
         window.addEventListener('mousemove', this.spaceshipMove)
         window.addEventListener('keydown', (e) => this.toggleGameState(e))
         
@@ -177,14 +179,17 @@ class Game {
        })
        
     }
-     stopGame(){
-         console.log(this.htmlElements.pauseMenu)
+      stopGame = () => {
+         if(this.htmlElements.pauseMenu.classList.contains('hide')) 
+         {
          this.htmlElements.pauseMenu.classList.remove('hide')
         this.clearIntervals()
         this.removeEventListeners()
         this.toggleAnimations()
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
+         }
+         else return console.log('juz jest menu')
      }
      resumeGame(){
          console.log(this.htmlElements.pauseMenu)
@@ -218,7 +223,9 @@ class Game {
          })
          
      }
-     
+     quitGame(){
+         
+     }
 }
 
 const game = new Game()
