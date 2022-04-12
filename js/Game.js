@@ -36,7 +36,7 @@ class Game {
         
         this.handleEventListeners()
         this.htmlElements.MainMenu.classList.add('hide')
-        
+        this.htmlElements.container.style.backgroundImage = 'none'
        this.startGame()
        
 
