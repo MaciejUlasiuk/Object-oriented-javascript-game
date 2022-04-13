@@ -1,5 +1,5 @@
 export class Enemy {
-    constructor(type, lives)
+    constructor(type, lives, position = null)
     {
         this.type=type
         this.content = document.createElement('div')
@@ -7,10 +7,12 @@ export class Enemy {
         this.top = 0;
         this.left = null
         this.enemyInterval = null
+        this.enemyMissiles = []
+        this.position = position
     }
     initEnemy(){
         this.content.classList.add(this.type)
-        this.left = Math.floor(Math.random()*(window.innerWidth - this.content.offsetWidth))
+        this.left = this.position ? this.position : Math.floor(Math.random()*(window.innerWidth - this.content.offsetWidth))
         this.content.style.left = `${this.left}px`;
         this.content.style.top = `${this.top}px`;
         
@@ -22,5 +24,7 @@ export class Enemy {
         this.content.style.top = `${this.content.offsetTop + 2}px`
 
     }
+
+
     
 }

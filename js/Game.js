@@ -9,6 +9,7 @@ class Game {
             container: document.querySelector('[data-container]'),
             button: document.querySelector('[data-button]'),
             MainMenu: document.querySelector('[data-mainmenu]'),
+            MainMenuBtn: document.querySelector('[data-startGame]'),
             score: document.querySelector('[data-score]'),
             lives: document.querySelector('[data-lives]'),
             resumeButton: document.querySelector('[data-resumeBtn]'),
@@ -27,6 +28,7 @@ class Game {
         this.gameState = true;
         
     }
+     
     
     start()
     {
@@ -54,7 +56,7 @@ class Game {
     }
 
     handleEventListeners(){
-        this.htmlElements.MainMenu.addEventListener('click', () => this.start())
+        this.htmlElements.MainMenuBtn.addEventListener('click', () => this.start())
     }
     handleGameEventListeners(){
         document.addEventListener("visibilitychange", this.stopGame);
@@ -162,7 +164,7 @@ class Game {
          enemy.initEnemy()
      }
      updateInformation(){
-         this.htmlElements.score.textContent = this.score;
+         this.htmlElements.score.textContent = `Score ${this.score}`;
          this.htmlElements.lives.textContent = `Lives: ${this.lives}`
      }
      clearIntervals()
