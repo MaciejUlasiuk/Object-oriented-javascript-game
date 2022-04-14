@@ -17,6 +17,7 @@ export class Statistics{
     }
     updateElements()
     {
-        
+        this.elements.timeSpent.textContent = score;
+        this.elements.shotsFired.textContent = shotsFired;
     }
 }
