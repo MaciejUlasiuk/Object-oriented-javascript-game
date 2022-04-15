@@ -5,6 +5,7 @@ export class Statistics{
         this.elements = {
             timeSpent: document.querySelector('.time-spent'),
             shotsFired: document.querySelector('.shots-fired'),
+            enemiesDestroyed: document.querySelector('.enemies-destroyed')
         }
         
     }
