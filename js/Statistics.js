@@ -20,5 +20,6 @@ export class Statistics{
     {
         this.elements.timeSpent.textContent = score;
         this.elements.shotsFired.textContent = shotsFired;
+        this.elements.enemiesDestroyed.textContent = enemiesDestroyed;
     }
 }
