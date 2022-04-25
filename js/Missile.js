@@ -1,10 +1,10 @@
 
 export class Missile {
-    constructor(x,y)
+    constructor(x,y, type = 'missile',)
     {
         this.x = x;
         this.y = y;
-        this.class = 'missile'
+        this.class = type;
         this.interval = null
         this.missile = document.createElement('div')
         this.initMissile()
@@ -14,17 +14,20 @@ export class Missile {
     initMissile(){
         
         this.missile.classList.add(this.class)
-        this.missile.style.left = `${this.x}`;
-        this.missile.style.top = `${this.y}`;
+        this.missile.style.left = `${this.x + this.missile.offsetWidth / 2}px`;
+        this.missile.style.top = `${this.y + this.missile.offsetHeight}px`;
         document.querySelector('[data-container]').appendChild(this.missile)
     }
-    updatePosition()
+    updatePositionForSpaceshipMissile()
     {
         
         
         this.missile.style.top = `${this.missile.offsetTop - 2}px`;
         
     }
-    
+    updatePositionForEnemyMissile()
+    {
+        this.missile.style.top = `${this.missile.offsetTop + 2}px`;
+    }
     
 }

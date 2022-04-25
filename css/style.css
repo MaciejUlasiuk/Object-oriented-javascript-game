@@ -27,6 +27,7 @@ body {
   background-color: black;
   position: relative;
   background-image: url('../images/stars-galaxy.gif');
+  overflow: hidden;
 }
 
 .information {

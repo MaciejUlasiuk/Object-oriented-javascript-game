@@ -94,8 +94,8 @@ class Game {
 
     shootMissile()
      {
-         const missileLeftPosition = this.spaceship.spaceship.style.left
-         const missileTopPosition = this.spaceship.spaceship.style.top
+         const missileLeftPosition = this.spaceship.spaceship.offsetLeft + this.spaceship.spaceship.offsetWidth
+         const missileTopPosition = this.spaceship.spaceship.offsetTop
          const missile = new Missile(missileLeftPosition,missileTopPosition)
          this.missiles.push(missile)
          
