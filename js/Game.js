@@ -85,7 +85,7 @@ class Game {
      spaceshipMove = (e) => this.spaceship.move(e)
 
      toggleGameState(e){
-         if(e.key === 'e')
+         if(e.key === 'Escape')
          {
         this.gameState ? this.stopGame() : this.resumeGame()
         
@@ -94,7 +94,7 @@ class Game {
 
     shootMissile()
      {
-         const missileLeftPosition = this.spaceship.spaceship.offsetLeft + this.spaceship.spaceship.offsetWidth
+         const missileLeftPosition = this.spaceship.spaceship.offsetLeft + (this.spaceship.spaceship.offsetWidth/2);
          const missileTopPosition = this.spaceship.spaceship.offsetTop
          const missile = new Missile(missileLeftPosition,missileTopPosition)
          this.missiles.push(missile)
@@ -114,7 +114,7 @@ class Game {
                  bottom: missile.missile.offsetTop + missile.missile.offsetHeight,
                  left: missile.missile.offsetLeft
              }
-            if(missilePosition.top<=0)
+            if(missilePosition.top<=0 || missilePosition.top>=window.innerHeight)
             {
                 
                 missile.missile.remove()
@@ -147,9 +147,13 @@ class Game {
                     }
                 if(enemyPosition.top>=window.innerHeight)
                 {
+                    this.htmlElements.container.classList.add('hit')
+                    setTimeout(()=>this.htmlElements.container.classList.remove('hit'),50)
+                    this.lives--;
                     enemy.content.remove()
                     this.enemies.splice(indexEnemy,1)
                     clearInterval(enemy.enemyInterval)
+                    this.updateInformation()
                     
                 }
             })
@@ -191,7 +195,7 @@ class Game {
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
          }
-         else return console.log('juz jest menu')
+        
      }
      resumeGame(){
          console.log(this.htmlElements.pauseMenu)
@@ -231,4 +235,4 @@ class Game {
 }
 
 const game = new Game()
-game.showMenu()
+window.onload = game.showMenu()

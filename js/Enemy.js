@@ -1,3 +1,5 @@
+// import { Missile } from "./Missile";
+
 export class Enemy {
     constructor(type = null, lives = null, position = null)
     {
@@ -7,12 +9,12 @@ export class Enemy {
         this.top = 0;
         this.left = null
         this.enemyInterval = null
-        this.enemyMissiles = []
+        this.enemyMissiles = [];
         this.position = position
     }
     initEnemy(){
         this.content.classList.add(this.type)
-        this.left = this.position ? this.position : Math.floor(Math.random()*(window.innerWidth - this.content.offsetWidth))
+        this.left = this.position ? this.position : Math.floor(Math.random()*((window.innerWidth - this.content.offsetWidth)))
         this.content.style.left = `${this.left}px`;
         this.content.style.top = `${this.top}px`;
         this.lives = this.lives ? this.lives : 3
@@ -26,10 +28,21 @@ export class Enemy {
 
     }
 
-    shootMissile(){
-        
-    }
-    
+    // shootMissile(){
+    //     const missileLeftPosition = this.content.offsetLeft + (this.content.offsetWidth/2);
+    //      const missileTopPosition = this.content.offsetTop
+    //      const missile = new Missile(missileLeftPosition,missileTopPosition,'enemyMissile')
+    //      this.enemyMissiles.push(missile)
+         
+    //      missile.interval = setInterval(()=> {
+    //          missile.updatePositionForEnemyMissile()
+             
+    //      },5)
+         
+    // }
 
-    
+    enemyKill(){
+        clearInterval(this.enemyInterval)
+    }
+      
 }
