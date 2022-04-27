@@ -17,10 +17,11 @@ export class Statistics{
     {
         this.element.classList.add('hide')
     }
-    updateElements()
+    updateElements(score, shotsFired, enemiesDestroyed, bossesDestroyed)
     {
         this.elements.timeSpent.textContent = score;
         this.elements.shotsFired.textContent = shotsFired;
         this.elements.enemiesDestroyed.textContent = enemiesDestroyed;
+        this.elements.bossesDestroyed.textContent = bossesDestroyed
     }
 }
