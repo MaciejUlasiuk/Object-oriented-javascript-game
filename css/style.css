@@ -187,7 +187,7 @@ body {
 }
 .main-menu h1{
   padding: 20px;
-  color: darkred;
+  color: var(--primary-color);
   font-size: 400%;
   font-family: 'Orbitron', sans-serif;
 }

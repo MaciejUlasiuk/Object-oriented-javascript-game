@@ -1,6 +1,7 @@
 import { Spaceship } from "./Spaceship.js"
 import { Missile } from "./Missile.js";
 import { Enemy } from "./Enemy.js";
+import { Statistics } from "./Statistics.js";
 
 class Game {
     constructor()
@@ -26,6 +27,7 @@ class Game {
         this.lives = 3;
         this.gameStarted = false;
         this.gameState = true;
+        this.statistics = new Statistics()
         
     }
      
@@ -47,6 +49,7 @@ class Game {
     {
         this.handleGameEventListeners()
         this.addIntervals()
+        this.updateInformation()
 
     }
     showMenu()
@@ -135,14 +138,15 @@ class Game {
                             missile.missile.remove()
                         this.missiles.splice(index,1)
                         clearInterval(missile.interval)
-                        enemy.content.remove();
+                        enemy.content.classList.add('explosion')
+                       setTimeout(()=>enemy.content.remove(),600)
                         this.enemies.splice(indexEnemy,1)
                         clearInterval(enemy.enemyInterval)
                         this.score++
                         this.updateInformation()
                         if(this.score % 5 ===0)
                         {
-                            console.log('hi')
+                        
                         }
                     }
                 if(enemyPosition.top>=window.innerHeight)
