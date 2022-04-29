@@ -2,6 +2,7 @@ import { Spaceship } from "./Spaceship.js"
 import { Missile } from "./Missile.js";
 import { Enemy } from "./Enemy.js";
 import { Statistics } from "./Statistics.js";
+import { Modal } from "./Modal.js";
 
 class Game {
     constructor()
@@ -16,6 +17,7 @@ class Game {
             resumeButton: document.querySelector('[data-resumeBtn]'),
             pauseMenu: document.querySelector('[data-pause]'),
             statisticsButton: document.querySelector('[data-statistics-button]'),
+            
             
         }
         this.spaceship = new Spaceship()
@@ -34,6 +36,7 @@ class Game {
         this.enemiesDestroyed = 0;
         this.bossesDestroyed = 0;
         this.time = new Date()
+        this.modal = new Modal()
         
     }
      
@@ -47,6 +50,7 @@ class Game {
         this.handleEventListeners()
         this.htmlElements.MainMenu.classList.add('hide')
         this.htmlElements.container.style.backgroundImage = 'none'
+        this.htmlElements.container.style.animation = 'none'
        this.startGame()
        
 
@@ -173,12 +177,13 @@ class Game {
                     this.enemies.splice(indexEnemy,1)
                     clearInterval(enemy.enemyInterval)
                     this.updateInformation()
-                    
+                    if(this.lives===0)this.endGame()
                 }
-                this.enemy
+                
             })
          })
      }
+
      addEnemy(){
          const enemy = new Enemy('enemy', 3)
          this.enemies.push(enemy)
@@ -206,7 +211,7 @@ class Game {
        
     }
       stopGame = () => {
-          if(this.statistics.element.classList.contains('hide')===false) return console.log('works')
+          if(this.statistics.element.classList.contains('hide')===false ||this.modal.element.classList.contains('hide')===false) return 
          else if(this.htmlElements.pauseMenu.classList.contains('hide')) 
          {
          this.htmlElements.pauseMenu.classList.remove('hide')
@@ -219,7 +224,6 @@ class Game {
         
      }
      resumeGame(){
-         console.log(this.htmlElements.pauseMenu)
          this.statistics.hide()
         this.htmlElements.pauseMenu.classList.add('hide')
         this.addIntervals()
@@ -228,6 +232,14 @@ class Game {
         this.toggleAnimations()
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
+     }
+     endGame(){
+        this.clearIntervals()
+        this.removeEventListeners()
+        this.toggleAnimations()
+        this.spaceship.toggleSpaceshipAnimation()
+        this.gameState = !this.gameState
+        this.modal.show()
      }
      addOldIntervals()
     {
@@ -245,9 +257,7 @@ class Game {
     }
      toggleAnimations(){
          this.enemies.forEach(element => {
-            const running = element.content.style.animationPlayState;
-             element.content.style.animationPlayState = running ? 'paused' : 'running';
-
+            element.toggleAnimation()
          })
          
      }
