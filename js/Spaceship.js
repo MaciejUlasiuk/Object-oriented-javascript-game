@@ -12,7 +12,6 @@
          this.spaceship.style.bottom = 0;
          this.spaceship.style.left = `${window.innerWidth/2}px`
          document.querySelector('[data-container]').appendChild(this.spaceship)
-         console.log(this.spaceship)
          
 
      }
@@ -33,6 +32,7 @@
         
     }
      toggleSpaceshipAnimation(){
-         this.spaceship.style.animationPlayState = 'running' ? 'paused' : 'running'
+         if(this.spaceship.style.animationPlayState==='paused') this.spaceship.style.animationPlayState = 'running'
+         else this.spaceship.style.animationPlayState = 'paused'
      }
  }
