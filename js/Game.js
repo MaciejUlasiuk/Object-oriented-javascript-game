@@ -14,7 +14,9 @@ class Game {
             score: document.querySelector('[data-score]'),
             lives: document.querySelector('[data-lives]'),
             resumeButton: document.querySelector('[data-resumeBtn]'),
-            pauseMenu: document.querySelector('[data-pause]')
+            pauseMenu: document.querySelector('[data-pause]'),
+            statisticsButton: document.querySelector('[data-statistics-button]'),
+            
         }
         this.spaceship = new Spaceship()
         this.missileIntervalSpeed = 100;
@@ -28,6 +30,10 @@ class Game {
         this.gameStarted = false;
         this.gameState = true;
         this.statistics = new Statistics()
+        this.shotsFired = 0;
+        this.enemiesDestroyed = 0;
+        this.bossesDestroyed = 0;
+        this.time = new Date()
         
     }
      
@@ -60,6 +66,13 @@ class Game {
 
     handleEventListeners(){
         this.htmlElements.MainMenuBtn.addEventListener('click', () => this.start())
+        this.htmlElements.statisticsButton.addEventListener('click', ()=>{
+            this.htmlElements.pauseMenu.classList.add('hide')
+            this.statistics.updateElements(this.time,this.shotsFired,this.enemiesDestroyed,this.bossesDestroyed)
+            this.statistics.show()
+            
+           
+        })
     }
     handleGameEventListeners(){
         document.addEventListener("visibilitychange", this.stopGame);
@@ -101,7 +114,7 @@ class Game {
          const missileTopPosition = this.spaceship.spaceship.offsetTop
          const missile = new Missile(missileLeftPosition,missileTopPosition)
          this.missiles.push(missile)
-         
+         this.shotsFired++;
          missile.interval = setInterval(()=> {
              missile.updatePosition()
              
@@ -110,6 +123,7 @@ class Game {
      }
 
      checkPostion(){
+         
          this.missiles.forEach((missile, index) => {
              const missilePosition = {
                  top: missile.missile.offsetTop,
@@ -143,6 +157,7 @@ class Game {
                         this.enemies.splice(indexEnemy,1)
                         clearInterval(enemy.enemyInterval)
                         this.score++
+                        this.enemiesDestroyed++;
                         this.updateInformation()
                         if(this.score % 5 ===0)
                         {
@@ -160,6 +175,7 @@ class Game {
                     this.updateInformation()
                     
                 }
+                this.enemy
             })
          })
      }
@@ -190,7 +206,8 @@ class Game {
        
     }
       stopGame = () => {
-         if(this.htmlElements.pauseMenu.classList.contains('hide')) 
+          if(this.statistics.element.classList.contains('hide')===false) return console.log('works')
+         else if(this.htmlElements.pauseMenu.classList.contains('hide')) 
          {
          this.htmlElements.pauseMenu.classList.remove('hide')
         this.clearIntervals()
@@ -203,6 +220,7 @@ class Game {
      }
      resumeGame(){
          console.log(this.htmlElements.pauseMenu)
+         this.statistics.hide()
         this.htmlElements.pauseMenu.classList.add('hide')
         this.addIntervals()
         this.addOldIntervals()

@@ -167,8 +167,9 @@ body {
   top: 50%;
   transform: translate(-50%,-50%);
   opacity: 1;
+  z-index: 100;
 }
-.main-menu{
+.main-menu, .statistics{
   display: flex;
   position: absolute;
   flex-direction: column;
@@ -185,14 +186,15 @@ body {
   animation: main-menu-animation 5s forwards infinite;
   background-color: black;
 }
-.main-menu h1{
+
+.main-menu h1, .statistics h1{
   padding: 20px;
   color: var(--primary-color);
   font-size: 400%;
   font-family: 'Orbitron', sans-serif;
 }
-.main-menu p{
-  color: #a02c2c;
+.main-menu p, .statistics p{
+  color: var(--primary-color);
   font-size: 200%;
   padding: 20px;
   font-family: 'Orbitron', sans-serif;

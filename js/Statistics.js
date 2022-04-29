@@ -12,16 +12,24 @@ export class Statistics{
     }
     show(){
         this.element.classList.remove('hide')
+        console.log(this.element)
     }
     hide()
     {
         this.element.classList.add('hide')
     }
-    updateElements(score, shotsFired, enemiesDestroyed, bossesDestroyed)
+    updateElements(time, shotsFired, enemiesDestroyed, bossesDestroyed)
     {
-        this.elements.timeSpent.textContent = score;
-        this.elements.shotsFired.textContent = shotsFired;
-        this.elements.enemiesDestroyed.textContent = enemiesDestroyed;
-        this.elements.bossesDestroyed.textContent = bossesDestroyed
+        const thisTime = new Date()
+        const spentTime = ((thisTime - time)/1000)
+        const typeTime = () => {
+            if(spentTime/60<1) return `${spentTime} seconds`;
+            else if(spentTime/60>=1) return `${(spentTime/60).toFixed(2)} minutes`;
+
+        }
+        this.elements.timeSpent.textContent = `Time spent: ${typeTime()}`;
+        this.elements.shotsFired.textContent = `Shots fired: ${shotsFired}`;
+        this.elements.enemiesDestroyed.textContent = `Enemies destroyed: ${enemiesDestroyed}`;
+        this.elements.bossesDestroyed.textContent = `Bosses destroyed: ${bossesDestroyed}`
     }
 }
