@@ -42,6 +42,12 @@ export class Enemy {
          
     }
 
+    toggleAnimation()
+    {
+        if(this.content.style.animationPlayState==='paused') this.content.style.animationPlayState = 'running'
+         else this.content.style.animationPlayState = 'paused'
+    }
+
     enemyKill(){
         clearInterval(this.enemyInterval)
     }
