@@ -3,7 +3,7 @@ export class Modal{
     {
         this.element = document.querySelector('[data-modal]')
         this.elements = {
-
+            button: document.querySelector('[data-modal-button]')
         }
     }
     show(){
