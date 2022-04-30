@@ -105,7 +105,7 @@ class Game {
      spaceshipMove = (e) => this.spaceship.move(e)
 
      toggleGameState(e){
-         if(e.key === 'Escape')
+         if(e.key === 'Escape' && this.gameState!=='end')
          {
         this.gameState ? this.stopGame() : this.resumeGame()
         
@@ -160,13 +160,11 @@ class Game {
                        setTimeout(()=>enemy.content.remove(),600)
                         this.enemies.splice(indexEnemy,1)
                         clearInterval(enemy.enemyInterval)
+                        clearInterval(enemy.missilesInterval)
                         this.score++
                         this.enemiesDestroyed++;
                         this.updateInformation()
-                        if(this.score % 5 ===0)
-                        {
                         
-                        }
                     }
                 if(enemyPosition.top>=window.innerHeight)
                 {
@@ -176,6 +174,7 @@ class Game {
                     enemy.content.remove()
                     this.enemies.splice(indexEnemy,1)
                     clearInterval(enemy.enemyInterval)
+                    clearInterval(enemy.missilesInterval)
                     this.updateInformation()
                     if(this.lives===0)this.endGame()
                 }
@@ -205,8 +204,11 @@ class Game {
        this.missiles.forEach(missile => {
            clearInterval(missile.interval)
        })
+       
        this.enemies.forEach(enemy => {
            clearInterval(enemy.enemyInterval)
+           clearInterval(enemy.missilesInterval)
+           enemy.enemyMissiles.forEach(missile => clearInterval(missile.interval))
        })
        
     }
@@ -240,12 +242,16 @@ class Game {
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
         this.modal.show()
+        this.missiles.forEach(missile => missile.missile.remove())
+        this.enemies.forEach(enemy => enemy.content.remove())
+        this.gameState = 'end'
      }
      addOldIntervals()
     {
         this.missiles.forEach(missile => {
+            
             missile.interval = setInterval(()=> {
-                missile.updatePosition()
+             missile.class === 'missile' ? missile.updatePosition() : missile.updatePositionForEnemyMissile()
                 
             },3)
         })
