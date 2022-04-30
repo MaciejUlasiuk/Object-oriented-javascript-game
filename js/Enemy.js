@@ -11,6 +11,7 @@ export class Enemy {
         this.enemyInterval = null
         this.enemyMissiles = [];
         this.position = position
+        this.missilesInterval = null
     }
     initEnemy(){
         this.content.classList.add(this.type)
@@ -19,7 +20,7 @@ export class Enemy {
         this.content.style.left = `${this.left}px`;
         this.content.style.top = `${this.top}px`;
         this.lives = this.lives ? this.lives : 3
-        
+        this.missilesInterval = setInterval(this.shootMissile, 3000)
         
         this.content.style.animationPlayState = 'running'
     }
@@ -29,9 +30,9 @@ export class Enemy {
 
     }
 
-    shootMissile(){
+    shootMissile = () =>{
         const missileLeftPosition = this.content.offsetLeft + (this.content.offsetWidth/2);
-         const missileTopPosition = this.content.offsetTop
+         const missileTopPosition = (this.content.offsetTop - this.content.offsetHeight)
          const missile = new Missile(missileLeftPosition,missileTopPosition,'enemyMissile')
          this.enemyMissiles.push(missile)
          
