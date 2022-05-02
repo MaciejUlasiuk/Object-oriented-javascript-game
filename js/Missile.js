@@ -29,6 +29,7 @@ export class Missile {
     updatePositionForEnemyMissile()
     {
         this.missile.style.top = `${this.missile.offsetTop + 2}px`;
+        
     }
     removeMissile(){
         this.missile.remove()
