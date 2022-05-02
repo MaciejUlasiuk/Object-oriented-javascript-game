@@ -3,8 +3,10 @@ import { Missile } from "./Missile.js";
 import { Enemy } from "./Enemy.js";
 import { Statistics } from "./Statistics.js";
 import { Modal } from "./Modal.js";
+import { Missiles } from "./Missiles.js";
 
 class Game {
+    
     constructor()
     {
         this.htmlElements = {
@@ -25,7 +27,9 @@ class Game {
         this.missilesInterval = null
         this.enemiesInterval = null
         this.checkPositionInterval = null
-        this.missiles = [];
+         
+        this.missiles = []
+        this.enemyMissiles = [];
         this.enemies = [];
         this.score = 0;
         this.lives = 3;
@@ -125,6 +129,25 @@ class Game {
          },3)
          
      }
+     checkEnemyMissilePosition = () =>
+    {
+        this.enemyMissiles.forEach((missile, index) => {
+            const missilePosition = {
+                top: missile.missile.offsetTop,
+                right: missile.missile.offsetLeft + missile.missile.offsetWidth,
+                bottom: missile.missile.offsetTop + missile.missile.offsetHeight,
+                left: missile.missile.offsetLeft
+            }
+           if(missilePosition.top<=0 || missilePosition.top>=window.innerHeight)
+           {
+               
+               missile.missile.remove()
+               this.enemyMissiles.splice(index,1)
+               clearInterval(missile.interval)
+               console.log('yo  ')
+           }
+        }
+        )}
 
      checkPostion(){
          
@@ -180,6 +203,7 @@ class Game {
                 }
                 
             })
+            checkEnemyMissilePosition()
          })
      }
 
@@ -208,7 +232,7 @@ class Game {
        this.enemies.forEach(enemy => {
            clearInterval(enemy.enemyInterval)
            clearInterval(enemy.missilesInterval)
-           enemy.enemyMissiles.forEach(missile => clearInterval(missile.interval))
+           this.enemyMissiles.forEach(missile => clearInterval(missile.interval))
        })
        
     }
