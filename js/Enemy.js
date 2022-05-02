@@ -1,4 +1,5 @@
  import { Missile } from "./Missile.js";
+ import { Missiles } from "./Missiles.js";
 
 export class Enemy {
     constructor(type = null, lives = null, position = null)
@@ -9,7 +10,7 @@ export class Enemy {
         this.top = 0;
         this.left = null
         this.enemyInterval = null
-        this.enemyMissiles = [];
+        
         this.position = position
         this.missilesInterval = null
     }
@@ -30,18 +31,19 @@ export class Enemy {
 
     }
 
-    shootMissile = () =>{
+    shootMissile = (missiles) =>{
         const missileLeftPosition = this.content.offsetLeft + (this.content.offsetWidth/2);
          const missileTopPosition = (this.content.offsetTop - this.content.offsetHeight)
          const missile = new Missile(missileLeftPosition,missileTopPosition,'enemyMissile')
-         this.enemyMissiles.push(missile)
-         
+         missiles.push(missile)
          missile.interval = setInterval(()=> {
              missile.updatePositionForEnemyMissile()
              
          },5)
          
     }
+
+    
 
     toggleAnimation()
     {
