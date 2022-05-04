@@ -20,7 +20,7 @@ export class Missiles {
                missile.missile.remove()
                this.enemyMissiles.splice(index,1)
                clearInterval(missile.interval)
-               console.log('yo  ')
+               
            }
         }
         )}
