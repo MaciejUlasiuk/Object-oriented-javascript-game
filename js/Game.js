@@ -292,7 +292,7 @@ class Game {
          
      }
      quitGame(){
-         
+         this.htmlElements.container.textContent=''
      }
 }
 
