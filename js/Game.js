@@ -294,6 +294,7 @@ class Game {
      quitGame(){
          this.htmlElements.container.textContent=''
          this.score = 0;
+         this.lives = 0;
      }
 }
 
