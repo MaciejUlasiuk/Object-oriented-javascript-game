@@ -295,6 +295,8 @@ class Game {
          this.htmlElements.container.textContent=''
          this.score = 0;
          this.lives = 0;
+         this.toggleAnimations()
+         this.removeEventListeners()
      }
 }
 
