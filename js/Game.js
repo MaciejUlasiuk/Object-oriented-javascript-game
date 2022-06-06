@@ -297,6 +297,7 @@ class Game {
          this.lives = 0;
          this.toggleAnimations()
          this.removeEventListeners()
+         this.clearIntervals()
      }
 }
 
