@@ -203,7 +203,7 @@ class Game {
                 }
                 
             })
-            checkEnemyMissilePosition()
+            this.checkEnemyMissilePosition()
          })
      }
 
