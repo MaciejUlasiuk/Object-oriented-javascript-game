@@ -298,6 +298,7 @@ class Game {
          this.toggleAnimations()
          this.removeEventListeners()
          this.clearIntervals()
+         this.endGame()
      }
 }
 
