@@ -21,7 +21,7 @@ export class Enemy {
         this.content.style.left = `${this.left}px`;
         this.content.style.top = `${this.top}px`;
         this.lives = this.lives ? this.lives : 3
-        this.missilesInterval = setInterval(this.shootMissile, 3000)
+        //this.missilesInterval = setInterval(this.shootMissile, 3000)
         
         this.content.style.animationPlayState = 'running'
     }
