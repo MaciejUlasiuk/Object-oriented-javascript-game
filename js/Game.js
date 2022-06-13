@@ -23,7 +23,7 @@ class Game {
             
         }
         this.spaceship = new Spaceship()
-        this.missileIntervalSpeed = 100;
+        this.missileIntervalSpeed = 1000;
         this.missilesInterval = null
         this.enemiesInterval = null
         this.checkPositionInterval = null
@@ -102,7 +102,7 @@ class Game {
     addIntervals()
     {
         this.missilesInterval = setInterval(()=>this.shootMissile(),this.missileIntervalSpeed);
-        this.enemiesInterval = setInterval(()=>this.addEnemy('enemy',4),500);
+        this.enemiesInterval = setInterval(()=>this.addEnemy('enemy',4),2000);
         this.checkPositionInterval = setInterval(()=>this.checkPostion(),50)
     }
 
