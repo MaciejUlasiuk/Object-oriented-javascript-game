@@ -3,4 +3,7 @@ export class LevelBar{
     {
         this.element = document.createElement('div')
     }
+    hide(){
+        this.element.style.display = 'none'
+    }
 }
