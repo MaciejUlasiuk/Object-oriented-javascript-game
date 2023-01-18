@@ -18,9 +18,17 @@
     <div class="container" data-container>
       
       <section class="information">
-        <article class="information__content" data-score></article>
-        <article class="information__content" data-lives></article>
+        <article class="information__content score" data-score></article>
+        <article class="information__content lives" data-lives></article>
+        <article class="information__content level" data-level></article>
+        <article class="information__content money" data-money></article>
       </section>
+      <div class=" eventModal hide" data-eventModal>
+        <div class="modal__content">
+          <p class="modal__text eventInfo" data-score-info>
+            You lost! 
+          </p>
+      </div>
     </div>
     <div class="modal hide" data-modal>
       <div class="modal__content">
@@ -50,6 +58,7 @@
         <button class="main-menu-button">Options</button>
         <button class="main-menu-button">Highscores</button>
         <div class="main-menu-content-links">
+          
           <a href="https://github.com/hasaton"><img src="./images/GitHub-Mark.png" alt="Github" class="img-a"></a>
           <a href="https://www.youtube.com/watch?v=W9GXqCBAZb0"><img src="./images/youtube-logo.png" alt="youtube" class="img-a"></a>
         </div>
@@ -62,6 +71,7 @@
         <p class="shots-fired">Shots fired: 0</p>
         <p class="enemies-destroyed">Enemies destroyed: 0</p>
         <p class="bosses-destroyed">Bosses destroyed: 0</p>
+       <button class="modal__button">Back</button>
       </div>
       <div class="levels hide fixed-centred-menu"></div>
     <script type="module" src="./js/Game.js"></script>

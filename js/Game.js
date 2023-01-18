@@ -4,6 +4,8 @@ import { Enemy } from "./Enemy.js";
 import { Statistics } from "./Statistics.js";
 import { Modal } from "./Modal.js";
 import { Missiles } from "./Missiles.js";
+import { LevelBar } from "./LevelBar.js";
+import { EventModal } from "./EventModal.js";
 
 class Game {
     
@@ -24,6 +26,7 @@ class Game {
         }
         this.spaceship = new Spaceship()
         this.missileIntervalSpeed = 1000;
+        this.enemyIntervalSpeed = 3000;
         this.missilesInterval = null
         this.enemiesInterval = null
         this.checkPositionInterval = null
@@ -41,6 +44,13 @@ class Game {
         this.bossesDestroyed = 0;
         this.time = new Date()
         this.modal = new Modal()
+        this.eventModal = new EventModal()
+        this.expToLevel = 5
+        this.exp = 0
+        this.money = 0
+        this.lvl = 1
+        this.stage = 1;
+        this.levelBar = new LevelBar()
         
     }
      
@@ -102,7 +112,7 @@ class Game {
     addIntervals()
     {
         this.missilesInterval = setInterval(()=>this.shootMissile(),this.missileIntervalSpeed);
-        this.enemiesInterval = setInterval(()=>this.addEnemy('enemy',4),2000);
+        this.enemiesInterval = setInterval(()=>this.addEnemy('enemy',4),this.enemyIntervalSpeed);
         this.checkPositionInterval = setInterval(()=>this.checkPostion(),50)
     }
 
@@ -129,6 +139,25 @@ class Game {
          },3)
          
      }
+
+    nextLevel(){
+        this.expToLevel = Math.floor(this.expToLevel * 1.5)
+        this.exp = 0
+        this.lvl +=1;
+        this.score +=1000
+        this.missileIntervalSpeed = 300;
+        this.enemyIntervalSpeed = 600;
+        this.clearIntervals()
+        this.addIntervals()
+    }
+    checkIfLvlUp(){
+        if(this.exp>=this.expToLevel)
+        {
+            this.nextLevel()
+            this.eventModal.showInformation(`Lvl up to ${this.lvl}`);
+
+        }
+    }
      checkEnemyMissilePosition = () =>
     {
         this.enemyMissiles.forEach((missile, index) => {
@@ -184,9 +213,14 @@ class Game {
                         this.enemies.splice(indexEnemy,1)
                         clearInterval(enemy.enemyInterval)
                         clearInterval(enemy.missilesInterval)
-                        this.score++
+                        this.score+=10;
                         this.enemiesDestroyed++;
+                        this.exp +=2;
+                        this.checkIfLvlUp()
+                        this.levelBar.updateLvl(this.exp,this.expToLevel)
+                        
                         this.updateInformation()
+                        
                         
                     }
                 if(enemyPosition.top>=window.innerHeight)
@@ -203,8 +237,9 @@ class Game {
                 }
                 
             })
-            this.checkEnemyMissilePosition()
+             
          })
+         this.checkEnemyMissilePosition()
      }
 
      addEnemy(){

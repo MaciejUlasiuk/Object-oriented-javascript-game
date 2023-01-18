@@ -43,7 +43,25 @@ body {
   z-index: 2;
   position: relative;
 }
-
+.eventModal{
+  width: 20vw;
+  height: 10vh;
+  background-color: #000;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%,-50%);
+  border: 2px var(--primary-color) solid;
+  border-radius: 5%;
+  opacity: 100%;
+  font-family: cursive;
+  animation:  eventModal-animation 2s linear;
+}
 .modal {
   width: 50vw;
   height: 50vh;
@@ -86,6 +104,24 @@ body {
 .modal__button:hover {
   box-shadow: 0px 0px 20px 5px var(--primary-color);
 }
+
+.levelBar {
+  border: solid 5px cadetblue;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  position: absolute;
+  width: 0%;
+  height: 1.5vh;
+  top: 98vh;
+  transition: width 0.1s linear;
+}
+
+
+.score, .lives{
+  font-family:cursive
+  
+}
+
 
 .spaceship {
   width: var(--size-unit);
@@ -144,7 +180,7 @@ body {
   position: fixed;
   width: 70vw;
   height: 70vh;
-  z-index: 3;
+  z-index: 10;
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
@@ -191,6 +227,7 @@ body {
   border-radius: 2%;
   animation: main-menu-animation 5s forwards infinite;
   background-color: black;
+  opacity: 80%;
 }
 
 .main-menu h1, .statistics h1{
@@ -237,6 +274,20 @@ body {
 .main-menu-button:hover{
   box-shadow: 0px 0px 20px 5px var(--primary-color);
 }
+@keyframes eventModal-animation{
+  0% {
+    
+    opacity: 0;
+  }
+  50% {
+    top: 10%;
+    
+  }
+  100%{
+    opacity: 100%;
+  }
+}
+
 @keyframes main-menu-animation {
   0% {
     box-shadow: 0px 0px 0px 0px var(--primary-color)

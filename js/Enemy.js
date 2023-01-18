@@ -27,7 +27,7 @@ export class Enemy {
     }
     updatePosition(){
         
-        this.content.style.top = `${this.content.offsetTop + 2}px`
+        this.content.style.top = `${this.content.offsetTop + 4}px`
 
     }
 
