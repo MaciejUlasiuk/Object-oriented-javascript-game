@@ -4,6 +4,7 @@
   --size-unit: 64px;
   --ships-animation-time: 200ms;
   --explosions-animation-time: 600ms;
+  --heart-size: 20px;
 }
 
 *,
@@ -31,6 +32,7 @@ body {
   background-image: url('../images/background.jpg');
   animation: main-menu-background-animation 20s linear infinite;
   overflow: hidden;
+
 }
 
 .information {
@@ -131,6 +133,14 @@ body {
   
   position: fixed;
 }
+
+.heart {
+  width: var(--heart-size);
+  height: var(--heart-size);
+  background-image: url('../images/heart.png');
+  background-size: cover;
+  position: absolute;
+}
 .enemy {
   width: var(--size-unit);
   height: var(--size-unit);
@@ -139,6 +149,7 @@ body {
   
   z-index: 1;
   position: fixed;
+  
 }
 .enemyMissile{
   background-image: url('../images/enemyMissile.png');
