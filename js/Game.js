@@ -6,6 +6,7 @@ import { Modal } from "./Modal.js";
 import { Missiles } from "./Missiles.js";
 import { LevelBar } from "./LevelBar.js";
 import { EventModal } from "./EventModal.js";
+import { Heart } from "./Heart.js";
 
 class Game {
     
@@ -18,9 +19,11 @@ class Game {
             MainMenuBtn: document.querySelector('[data-startGame]'),
             score: document.querySelector('[data-score]'),
             lives: document.querySelector('[data-lives]'),
+            level: document.querySelector('[data-level]'),
             resumeButton: document.querySelector('[data-resumeBtn]'),
             pauseMenu: document.querySelector('[data-pause]'),
             statisticsButton: document.querySelector('[data-statistics-button]'),
+            //endButton: document.querySelector('[data-modal-button]'),
             
             
         }
@@ -34,6 +37,7 @@ class Game {
         this.missiles = []
         this.enemyMissiles = [];
         this.enemies = [];
+        this.hearts= [];
         this.score = 0;
         this.lives = 3;
         this.gameStarted = false;
@@ -51,6 +55,7 @@ class Game {
         this.lvl = 1
         this.stage = 1;
         this.levelBar = new LevelBar()
+        this.alreadyPlayed = false;
         
     }
      
@@ -59,15 +64,52 @@ class Game {
     {
         
        
-        this.spaceship.initSpaceship()
+        this.alreadyPlayed ? null : this.spaceship.initSpaceship()
         
-        this.handleEventListeners()
+        
         this.htmlElements.MainMenu.classList.add('hide')
         this.htmlElements.container.style.backgroundImage = 'none'
         this.htmlElements.container.style.animation = 'none'
        this.startGame()
+       this.alreadyPlayed = true
+       this.gameState = true
        
 
+    }
+
+    restartGame(){
+        this.htmlElements.MainMenu.classList.add('hide')
+        this.htmlElements.container.style.backgroundImage = 'none'
+        this.htmlElements.container.style.animation = 'none'
+        this.missileIntervalSpeed = 1000;
+        this.enemyIntervalSpeed = 3000;
+        this.missilesInterval = null
+        this.enemiesInterval = null
+        this.checkPositionInterval = null
+         
+        this.missiles = []
+        this.enemyMissiles = [];
+        this.enemies = [];
+        this.hearts= [];
+        this.score = 0;
+        this.lives = 3;
+       this.alreadyPlayed = true
+       this.gameState = true
+       this.lives = 3
+       this.gameStarted = false;
+        this.gameState = true;
+        this.expToLevel = 5
+        this.exp = 0
+        this.money = 0
+        this.lvl = 1
+        this.stage = 1;
+        this.addIntervals()
+        this.addOldIntervals()
+        this.updateInformation()
+        window.addEventListener('mousemove', this.spaceshipMove)
+        this.toggleAnimations()
+        this.spaceship.toggleSpaceshipAnimation()
+        
     }
     startGame()
     {
@@ -79,11 +121,11 @@ class Game {
     showMenu()
     {
         this.htmlElements.MainMenu.classList.remove('hide')
-        this.handleEventListeners()
+        this.alreadyPlayed ? console.log('yes') : this.handleEventListeners()
     }
 
     handleEventListeners(){
-        this.htmlElements.MainMenuBtn.addEventListener('click', () => this.start())
+        this.htmlElements.MainMenuBtn.addEventListener('click', () => this.alreadyPlayed ? this.restartGame() : this.start())
         this.htmlElements.statisticsButton.addEventListener('click', ()=>{
             this.htmlElements.pauseMenu.classList.add('hide')
             this.statistics.updateElements(this.time,this.shotsFired,this.enemiesDestroyed,this.bossesDestroyed)
@@ -91,6 +133,13 @@ class Game {
             
            
         })
+       /* this.modal.elements.button.addEventListener('click',()=>{
+            console.log('dziala')
+            this.modal.hide()
+
+           // game.showMenu()
+        }
+            ) */
     }
     handleGameEventListeners(){
         document.addEventListener("visibilitychange", this.stopGame);
@@ -147,8 +196,10 @@ class Game {
         this.score +=1000
         this.missileIntervalSpeed = 300;
         this.enemyIntervalSpeed = 600;
+        this.enemySpeed = 2;
         this.clearIntervals()
-        this.addIntervals()
+       this.gameState !='end' ? this.addIntervals() : null
+       this.gameState !='end' ?  this.addOldIntervals() : null
     }
     checkIfLvlUp(){
         if(this.exp>=this.expToLevel)
@@ -218,8 +269,8 @@ class Game {
                         this.exp +=2;
                         this.checkIfLvlUp()
                         this.levelBar.updateLvl(this.exp,this.expToLevel)
-                        
                         this.updateInformation()
+                  //      this.respawnHeart(missilePosition.top,missilePosition.left);
                         
                         
                     }
@@ -237,10 +288,60 @@ class Game {
                 }
                 
             })
-             
+    /*        this.hearts.forEach((heart,indexHeart) => {
+                const heartPosition = {
+                    top: heart.element.offsetTop,
+                    right: heart.element.offsetLeft + heart.element.offsetWidth,
+                    bottom: heart.element.offsetTop + heart.element.offsetHeight,
+                    left: heart.element.offsetLeft
+                }
+                const spaceshipPosition = {
+                    top: this.spaceship.spaceship.offsetTop,
+                    right: this.spaceship.spaceship.offsetLeft + this.spaceship.spaceship.offsetWidth,
+                    bottom: this.spaceship.spaceship.offsetTop + this.spaceship.spaceship.offsetHeight,
+                    left: this.spaceship.spaceship.offsetLeft 
+                }
+                console.log(heartPosition, spaceshipPosition)
+                if(spaceshipPosition.bottom >= heartPosition.top 
+                    && spaceshipPosition.top <= heartPosition.bottom 
+                    && spaceshipPosition.right >= heartPosition.left && spaceshipPosition.left <= heartPosition.spaceship)
+                    {
+                        console.log('dziala')
+                        this.lives++;
+                        heart.element.remove()
+                        this.hearts.splice(indexHeart,1);
+                        clearInterval(heart.interval);
+                    }
+
+                if(heartPosition.top>=window.innerHeight)
+                {
+                    heart.element.remove()
+                        this.hearts.splice(indexHeart,1);
+                        clearInterval(heart.interval);
+                }
+            })*/
          })
          this.checkEnemyMissilePosition()
      }
+
+      createHeart(top,left){
+        const heart = new Heart(top,left);
+        heart.initHeart()
+        this.hearts.push(heart);
+        heart.interval = setInterval(()=>{
+            heart.moveHeart()
+        },10)
+
+      }
+
+      respawnHeart(top,left){
+        console.log(Math.floor(Math.random()*5))
+        if(Math.floor(Math.random()*5))
+        {
+            
+            this.createHeart(top,left)
+        }
+      }
 
      addEnemy(){
          const enemy = new Enemy('enemy', 3)
@@ -253,6 +354,7 @@ class Game {
      updateInformation(){
          this.htmlElements.score.textContent = `Score ${this.score}`;
          this.htmlElements.lives.textContent = `Lives: ${this.lives}`
+         this.htmlElements.level.textContent = `Level: ${this.lvl}`
      }
      clearIntervals()
      {
@@ -269,6 +371,9 @@ class Game {
            clearInterval(enemy.missilesInterval)
            this.enemyMissiles.forEach(missile => clearInterval(missile.interval))
        })
+     /*  this.hearts.forEach((heart)=>{
+        clearInterval(heart.interval);
+       })*/
        
     }
       stopGame = () => {
@@ -301,6 +406,12 @@ class Game {
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
         this.modal.show()
+        this.modal.elements.button.addEventListener('click',()=>{
+            console.log('dziala')
+            this.modal.hide()
+
+            game.showMenu()
+        })
         this.missiles.forEach(missile => missile.missile.remove())
         this.enemies.forEach(enemy => enemy.content.remove())
         this.gameState = 'end'
@@ -319,6 +430,11 @@ class Game {
                 enemy.updatePosition()
             },10)
         })
+
+        this.hearts.forEach(heart=>{
+            heart.interval = setInterval(()=>{
+            heart.moveHeart()
+        },10)})
     }
      toggleAnimations(){
          this.enemies.forEach(element => {
@@ -337,5 +453,5 @@ class Game {
      }
 }
 
-const game = new Game()
+let game = new Game()
 window.onload = game.showMenu()
