@@ -23,6 +23,12 @@ class Game {
             resumeButton: document.querySelector('[data-resumeBtn]'),
             pauseMenu: document.querySelector('[data-pause]'),
             statisticsButton: document.querySelector('[data-statistics-button]'),
+            galaxy: document.querySelector('[data-galaxy]'),
+            backButton: document.querySelector('[data-back-button]'),
+            quitButton: document.querySelector('[data-quit-button]'),
+            helpButton: document.querySelector('[data-help-button]'),
+            help: document.querySelector('[data-help]'),
+            quitButton: document.querySelector('[data-quit]')
             //endButton: document.querySelector('[data-modal-button]'),
             
             
@@ -54,6 +60,7 @@ class Game {
         this.money = 0
         this.lvl = 1
         this.stage = 1;
+        this.galaxy = 1;
         this.levelBar = new LevelBar()
         this.alreadyPlayed = false;
         
@@ -68,9 +75,10 @@ class Game {
         
         
         this.htmlElements.MainMenu.classList.add('hide')
-        this.htmlElements.container.style.backgroundImage = 'none'
+       // this.htmlElements.container.style.backgroundImage = 'none'
         this.htmlElements.container.style.animation = 'none'
        this.startGame()
+       
        this.alreadyPlayed = true
        this.gameState = true
        
@@ -103,6 +111,10 @@ class Game {
         this.money = 0
         this.lvl = 1
         this.stage = 1;
+        this.galaxy = 1;
+        this.levelBar.show()
+      //  this.enemySpeed = 5;
+        this.spaceship.show()
         this.addIntervals()
         this.addOldIntervals()
         this.updateInformation()
@@ -114,15 +126,35 @@ class Game {
     startGame()
     {
         this.handleGameEventListeners()
+        this.spaceship.show()
         this.addIntervals()
         this.updateInformation()
+        
 
     }
     showMenu()
     {
         this.htmlElements.MainMenu.classList.remove('hide')
         this.alreadyPlayed ? console.log('yes') : this.handleEventListeners()
+        this.spaceship.hide();
+        this.removeInformation()
     }
+    backButton(){
+        console.log('works')
+        document.querySelector('[data-back-button]').removeEventListener('click',this.goBack)
+        this.htmlElements.help.classList.add('hide')
+        this.statistics.elements.backButton.removeEventListener('click', this.goBack)
+       this.statistics.hide()
+       this.htmlElements.pauseMenu.classList.remove('hide');
+    }
+    backButtonToMainMenu(){
+        console.log('works')
+        document.querySelector('[data-back-button]').removeEventListener('click',this.goBacktoMainMenu)
+        this.htmlElements.help.classList.add('hide')
+       this.htmlElements.MainMenu.classList.remove('hide');
+    }
+    goBack = () => this.backButton()
+    goBacktoMainMenu = () => this.backButtonToMainMenu()
 
     handleEventListeners(){
         this.htmlElements.MainMenuBtn.addEventListener('click', () => this.alreadyPlayed ? this.restartGame() : this.start())
@@ -130,9 +162,19 @@ class Game {
             this.htmlElements.pauseMenu.classList.add('hide')
             this.statistics.updateElements(this.time,this.shotsFired,this.enemiesDestroyed,this.bossesDestroyed)
             this.statistics.show()
-            
+            console.log(this.statistics.elements.backButton)
+            this.statistics.elements.backButton.addEventListener('click', this.goBack)
            
         })
+        this.htmlElements.helpButton.addEventListener('click', ()=>{
+            this.htmlElements.MainMenu.classList.add('hide')
+            this.htmlElements.help.classList.remove('hide')
+            document.querySelector('[data-back-button]').addEventListener('click', this.goBacktoMainMenu)})
+            this.htmlElements.quitButton.addEventListener('click', ()=>{
+                this.htmlElements.pauseMenu.classList.add('hide')
+                this.endGame()
+            })
+        
        /* this.modal.elements.button.addEventListener('click',()=>{
             console.log('dziala')
             this.modal.hide()
@@ -148,10 +190,13 @@ class Game {
         window.addEventListener('keydown', (e) => this.spaceship.keyboardMoveRight(e))
         window.addEventListener('mousemove', this.spaceshipMove)
         window.addEventListener('keydown', (e) => this.toggleGameState(e))
+       // window.addEventListener('click', this.shoot)
         
     }
+    shoot =() => this.shootMissile()
     removeEventListeners(){
         window.removeEventListener('mousemove', this.spaceshipMove)
+      //  window.removeEventListener('click', this.shoot)
         
     }
     animateCheckPosition(){
@@ -190,13 +235,18 @@ class Game {
      }
 
     nextLevel(){
-        this.expToLevel = Math.floor(this.expToLevel * 1.5)
+        this.expToLevel = Math.floor(this.expToLevel * 1.2)
         this.exp = 0
         this.lvl +=1;
+        if(this.lvl%2==0)
+        {
+            this.galaxy ++;
+           this.galaxy >7 ? null : this.changeGalaxy(this.galaxy)
+        }
         this.score +=1000
-        this.missileIntervalSpeed = 300;
-        this.enemyIntervalSpeed = 600;
-        this.enemySpeed = 2;
+        this.missileIntervalSpeed <= 550 ? null : this.missileIntervalSpeed -= 100;
+        this.enemyIntervalSpeed <= 600 ? null : this.enemyIntervalSpeed -=200;
+       
         this.clearIntervals()
        this.gameState !='end' ? this.addIntervals() : null
        this.gameState !='end' ?  this.addOldIntervals() : null
@@ -208,6 +258,10 @@ class Game {
             this.eventModal.showInformation(`Lvl up to ${this.lvl}`);
 
         }
+    }
+    changeGalaxy(galaxy){
+        
+        this.htmlElements.galaxy.src = `./images/galaxy${galaxy.toString()}.png`
     }
      checkEnemyMissilePosition = () =>
     {
@@ -348,13 +402,19 @@ class Game {
          this.enemies.push(enemy)
          enemy.enemyInterval = setInterval(()=>{
              enemy.updatePosition()
-         },10)
+         },5)
          enemy.initEnemy()
      }
+
      updateInformation(){
          this.htmlElements.score.textContent = `Score ${this.score}`;
          this.htmlElements.lives.textContent = `Lives: ${this.lives}`
-         this.htmlElements.level.textContent = `Level: ${this.lvl}`
+         this.htmlElements.level.textContent = `Level: ${this.lvl}, ${((this.exp*100)/this.expToLevel).toFixed(0)}%`
+     }
+     removeInformation(){
+        this.htmlElements.score.textContent = ``;
+         this.htmlElements.lives.textContent = ``
+         this.htmlElements.level.textContent = ``
      }
      clearIntervals()
      {
@@ -377,7 +437,10 @@ class Game {
        
     }
       stopGame = () => {
-          if(this.statistics.element.classList.contains('hide')===false ||this.modal.element.classList.contains('hide')===false) return 
+          if(this.statistics.element.classList.contains('hide')===false 
+          ||this.modal.element.classList.contains('hide')===false 
+          || this.htmlElements.MainMenu.classList.contains('hide')===false
+          || this.htmlElements.help.classList.contains('hide')===false) return 
          else if(this.htmlElements.pauseMenu.classList.contains('hide')) 
          {
          this.htmlElements.pauseMenu.classList.remove('hide')
@@ -386,6 +449,7 @@ class Game {
         this.toggleAnimations()
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
+        this.htmlElements.galaxy.style.animationPlaystate = 'paused'
          }
         
      }
@@ -406,15 +470,18 @@ class Game {
         this.spaceship.toggleSpaceshipAnimation()
         this.gameState = !this.gameState
         this.modal.show()
+        this.modal.changeInfo(this.score)
         this.modal.elements.button.addEventListener('click',()=>{
             console.log('dziala')
             this.modal.hide()
 
             game.showMenu()
         })
+        
         this.missiles.forEach(missile => missile.missile.remove())
         this.enemies.forEach(enemy => enemy.content.remove())
         this.gameState = 'end'
+        this.levelBar.hide()
      }
      addOldIntervals()
     {
