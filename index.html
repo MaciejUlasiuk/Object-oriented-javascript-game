@@ -16,23 +16,25 @@
   </head>
   <body>
     <div class="container" data-container>
-      
+      <img src="./images/galaxy1.png" alt="galaxy" class="backgroundImg" data-galaxy>
       <section class="information">
         <article class="information__content score" data-score></article>
         <article class="information__content lives" data-lives></article>
         <article class="information__content level" data-level></article>
         <article class="information__content money" data-money></article>
       </section>
+      
       <div class=" eventModal hide" data-eventModal>
         <div class="modal__content">
           <p class="modal__text eventInfo" data-score-info>
             You lost! 
           </p>
       </div>
+      
     </div>
     <div class="modal hide" data-modal>
       <div class="modal__content">
-        <p class="modal__text" data-score-info>
+        <p class="modal__text" data-modal-info>
           You lost! 
         </p>
         <button class="modal__button" data-modal-button>Main Menu</button>
@@ -42,9 +44,9 @@
     <div class="pause hide" data-pause>
       <div class="pausemenu__content">
         <button class="modal__button" data-resumeBtn>Resume</button>
-      <button class="modal__button">Options</button>
+      <button class="modal__button">Help</button>
       <button class="modal__button" data-statistics-button>Statistics</button>
-      <button class="modal__button">Quit</button>
+      <button class="modal__button" data-quit>Quit</button>
     </div>
     </div>
     </div>
@@ -55,7 +57,7 @@
       </div>
       <div class="main-menu-content ">
         <button class="main-menu-button" data-startGame>Start game</button>
-        <button class="main-menu-button">Options</button>
+        <button class="main-menu-button" data-help-button>Help</button>
         <button class="main-menu-button">Highscores</button>
         <div class="main-menu-content-links">
           
@@ -71,7 +73,15 @@
         <p class="shots-fired">Shots fired: 0</p>
         <p class="enemies-destroyed">Enemies destroyed: 0</p>
         <p class="bosses-destroyed">Bosses destroyed: 0</p>
-       <button class="modal__button">Back</button>
+       <button class="modal__button pad" data-back-buttton>Back</button>
+      </div>
+      <div class="help  fixed-centered-menu hide" data-help>
+        <h1>Help</h1>
+        <p class="help-paragraph">1.Move with your mouse and shoot enemy</p>
+        <p class="help-paragraph">2.Every 2 levels you change galaxy</p>
+        <p class="help-paragraph">3.Every 3 levels you gain life</p>
+        <p class="help-paragraph">4.If enemy manages to run trough screen you lose life</p>
+       <button class="modal__button pad" data-back-button>Back</button>
       </div>
       <div class="levels hide fixed-centred-menu"></div>
     <script type="module" src="./js/Game.js"></script>
