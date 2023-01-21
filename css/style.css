@@ -278,6 +278,12 @@ body {
   padding: 20px;
   font-family: 'Orbitron', sans-serif;
 }
+.highscores p{
+  color: var(--primary-color);
+  font-size: 150%;
+  padding: 20px;
+  font-family: 'Orbitron', sans-serif;
+}
 .main-menu-button{
   padding: 30px 15px;
   background-color: black;

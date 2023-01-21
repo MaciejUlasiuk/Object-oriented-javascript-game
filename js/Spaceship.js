@@ -35,4 +35,12 @@
          if(this.spaceship.style.animationPlayState==='paused') this.spaceship.style.animationPlayState = 'running'
          else this.spaceship.style.animationPlayState = 'paused'
      }
+     hide(){
+        this.spaceship.classList.add('hide')
+     }
+    show(){
+        console.log('yo')
+            this.spaceship.classList.remove('hide')
+         }
+     
  }

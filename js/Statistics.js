@@ -6,7 +6,8 @@ export class Statistics{
             timeSpent: document.querySelector('.time-spent'),
             shotsFired: document.querySelector('.shots-fired'),
             enemiesDestroyed: document.querySelector('.enemies-destroyed'),
-            bossesDestroyed: document.querySelector('.bosses-destroyed')
+            bossesDestroyed: document.querySelector('.bosses-destroyed'),
+            backButton: document.querySelector('[data-back-buttton]')
         }
         
     }

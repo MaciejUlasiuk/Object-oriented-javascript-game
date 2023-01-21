@@ -3,8 +3,10 @@ export class Modal{
     {
         this.element = document.querySelector('[data-modal]')
         this.elements = {
-            button: document.querySelector('[data-modal-button]')
+            button: document.querySelector('[data-modal-button]'),
+            information: document.querySelector('[data-modal-info]')
         }
+        
     }
     show(){
         this.element.classList.remove('hide')
@@ -12,5 +14,8 @@ export class Modal{
     hide()
     {
         this.element.classList.add('hide')
+    }
+    changeInfo(score){
+        this.elements.information.textContent = `Your score: ${score}`
     }
 }

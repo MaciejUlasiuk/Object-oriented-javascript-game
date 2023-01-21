@@ -7,6 +7,7 @@ import { Missiles } from "./Missiles.js";
 import { LevelBar } from "./LevelBar.js";
 import { EventModal } from "./EventModal.js";
 import { Heart } from "./Heart.js";
+import { Highscores } from "./Highscores.js";
 
 class Game {
     
@@ -28,14 +29,15 @@ class Game {
             quitButton: document.querySelector('[data-quit-button]'),
             helpButton: document.querySelector('[data-help-button]'),
             help: document.querySelector('[data-help]'),
-            quitButton: document.querySelector('[data-quit]')
+            quitButton: document.querySelector('[data-quit]'),
+            highscoresButton: document.querySelector('[data-highscores-button]'),
             //endButton: document.querySelector('[data-modal-button]'),
             
             
         }
         this.spaceship = new Spaceship()
-        this.missileIntervalSpeed = 1000;
-        this.enemyIntervalSpeed = 3000;
+        this.missileIntervalSpeed = 100;
+        this.enemyIntervalSpeed = 200;
         this.missilesInterval = null
         this.enemiesInterval = null
         this.checkPositionInterval = null
@@ -44,6 +46,7 @@ class Game {
         this.enemyMissiles = [];
         this.enemies = [];
         this.hearts= [];
+        this.highscores = [];
         this.score = 0;
         this.lives = 3;
         this.gameStarted = false;
@@ -55,6 +58,7 @@ class Game {
         this.time = new Date()
         this.modal = new Modal()
         this.eventModal = new EventModal()
+        this.highscore = new Highscores()
         this.expToLevel = 5
         this.exp = 0
         this.money = 0
@@ -89,8 +93,8 @@ class Game {
         this.htmlElements.MainMenu.classList.add('hide')
         this.htmlElements.container.style.backgroundImage = 'none'
         this.htmlElements.container.style.animation = 'none'
-        this.missileIntervalSpeed = 1000;
-        this.enemyIntervalSpeed = 3000;
+        this.missileIntervalSpeed = 900;
+        this.enemyIntervalSpeed = 1500;
         this.missilesInterval = null
         this.enemiesInterval = null
         this.checkPositionInterval = null
@@ -148,14 +152,19 @@ class Game {
        this.htmlElements.pauseMenu.classList.remove('hide');
     }
     backButtonToMainMenu(){
-        console.log('works')
+        if(this.htmlElements.help.classList.contains('hide'))
+        {
+            this.highscore.backBtn.removeEventListener('click',this.goBacktoMainMenu)
+            this.highscore.hide()
+            this.htmlElements.MainMenu.classList.remove('hide')
+        }
         document.querySelector('[data-back-button]').removeEventListener('click',this.goBacktoMainMenu)
         this.htmlElements.help.classList.add('hide')
        this.htmlElements.MainMenu.classList.remove('hide');
     }
     goBack = () => this.backButton()
     goBacktoMainMenu = () => this.backButtonToMainMenu()
-
+    
     handleEventListeners(){
         this.htmlElements.MainMenuBtn.addEventListener('click', () => this.alreadyPlayed ? this.restartGame() : this.start())
         this.htmlElements.statisticsButton.addEventListener('click', ()=>{
@@ -170,9 +179,17 @@ class Game {
             this.htmlElements.MainMenu.classList.add('hide')
             this.htmlElements.help.classList.remove('hide')
             document.querySelector('[data-back-button]').addEventListener('click', this.goBacktoMainMenu)})
-            this.htmlElements.quitButton.addEventListener('click', ()=>{
+        this.htmlElements.quitButton.addEventListener('click', ()=>{
                 this.htmlElements.pauseMenu.classList.add('hide')
                 this.endGame()
+            })
+            
+            this.htmlElements.highscoresButton.addEventListener('click',()=>{
+                this.htmlElements.MainMenu.classList.add('hide')
+                this.highscore.show()
+                
+                this.highscore.updateHighscores(this.highscores)
+                this.highscore.backBtn.addEventListener('click', this.goBacktoMainMenu)
             })
         
        /* this.modal.elements.button.addEventListener('click',()=>{
@@ -241,11 +258,12 @@ class Game {
         if(this.lvl%2==0)
         {
             this.galaxy ++;
-           this.galaxy >7 ? null : this.changeGalaxy(this.galaxy)
+           this.galaxy >8 ? null : this.changeGalaxy(this.galaxy)
         }
+        this.lvl%3==0 ? this.lives++ : null
         this.score +=1000
-        this.missileIntervalSpeed <= 550 ? null : this.missileIntervalSpeed -= 100;
-        this.enemyIntervalSpeed <= 600 ? null : this.enemyIntervalSpeed -=200;
+       // this.missileIntervalSpeed <= 500 ? null : this.missileIntervalSpeed -= 100;
+       // this.enemyIntervalSpeed <= 600 ? null : this.enemyIntervalSpeed -=200;
        
         this.clearIntervals()
        this.gameState !='end' ? this.addIntervals() : null
@@ -440,7 +458,8 @@ class Game {
           if(this.statistics.element.classList.contains('hide')===false 
           ||this.modal.element.classList.contains('hide')===false 
           || this.htmlElements.MainMenu.classList.contains('hide')===false
-          || this.htmlElements.help.classList.contains('hide')===false) return 
+          || this.htmlElements.help.classList.contains('hide')===false
+          || this.highscore.element.classList.contains('hide')===false) return 
          else if(this.htmlElements.pauseMenu.classList.contains('hide')) 
          {
          this.htmlElements.pauseMenu.classList.remove('hide')
@@ -477,7 +496,7 @@ class Game {
 
             game.showMenu()
         })
-        
+        this.highscores.push(this.score)
         this.missiles.forEach(missile => missile.missile.remove())
         this.enemies.forEach(enemy => enemy.content.remove())
         this.gameState = 'end'
