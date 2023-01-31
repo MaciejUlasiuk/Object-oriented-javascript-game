@@ -4,7 +4,7 @@ export class Enemies {
             name: 'enemy',
             lives: 3,
             speed: 3,
-            
+            level: 1,
         }
     ]
 }
