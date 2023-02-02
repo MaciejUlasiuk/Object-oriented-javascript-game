@@ -55,6 +55,21 @@ body {
   z-index: 2;
   position: relative;
 }
+@media (max-width: 700px)
+{
+  .information{
+
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 600px)
+{
+  .information{
+
+    font-size: 1.2rem;
+  }
+}
+
 .eventModal{
   width: 20vw;
   height: 10vh;
@@ -74,6 +89,7 @@ body {
   font-family: cursive;
   animation:  eventModal-animation 2s linear;
 }
+
 .modal {
   width: 50vw;
   height: 50vh;
@@ -95,8 +111,25 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
-
+@media (max-width: 800px)
+{
+  .modal{
+    width: 90vw;
+    height: 90vh;
+  }
+  .modal__content{
+    align-items: center;
+    gap: 20px;
+  }
+  .modal__button{
+    width: 50%;
+    height: 50%;
+  }
+}
 .modal__text {
   font-size: 42px;
   text-align: center;
@@ -108,8 +141,9 @@ body {
   border: 3px solid var(--primary-color);
   color: var(--primary-color);
   cursor: pointer;
-  font-size: 3vw;
+  font-size: 2rem;
   margin-top: 2vh;
+  width: 200px;
   outline: none;
   transition: box-shadow 0.1s ease-in;
 }
@@ -128,11 +162,16 @@ body {
   transition: width 0.1s linear;
 }
 
-
-.score, .lives{
-  font-family:cursive
-  
+@media (max-width: 880px)
+{
+  .modal__text{
+    font-size: 1.5rem;
+  }
+  .eventModal{
+    width: 30vw;
+  }
 }
+
 
 
 .spaceship {
@@ -256,6 +295,7 @@ body {
   color: var(--primary-color);
   font-size: 400%;
   font-family: 'Orbitron', sans-serif;
+  text-align: center;
 }
 .main-menu p, .statistics p {
   color: var(--primary-color);
@@ -274,9 +314,41 @@ body {
 }
 .help-paragraph{
   color: var(--primary-color);
-  font-size: 150%;
+  font-size: 1.25rem;
   padding: 20px;
   font-family: 'Orbitron', sans-serif;
+}
+@media (max-width: 1024px)
+{
+  .main-menu h1, .statistics h1, .help h1
+  {
+    font-size: 2rem;
+  }
+  .main-menu p, .statistics p, .help-paragraph
+  {
+    font-size: 1.25rem;
+  }
+  .modal__button, .main-menu-button{
+    font-size: 1rem;
+  }
+  .main-menu, .statistics, .help, .pause{
+    min-width: 85%;
+    min-height: 85%
+  }
+}
+@media (max-width: 600px)
+{
+.main-menu h1, .statistics h1, .help h1
+  {
+    font-size: 1.5rem;
+  }
+  .main-menu p, .statistics p, .help-paragraph
+  {
+    font-size: 1rem;
+  }
+  .modal__button, .main-menu-button{
+    font-size: 1.5rem;
+  }
 }
 .highscores p{
   color: var(--primary-color);
@@ -290,7 +362,7 @@ body {
   border: 3px solid var(--primary-color);
   color: var(--primary-color);
   cursor: pointer;
-  font-size: 2vw;
+  font-size: 1.5rem;
   margin-top: 2vh;
   outline: none;
   transition: box-shadow 0.1s ease-in;
