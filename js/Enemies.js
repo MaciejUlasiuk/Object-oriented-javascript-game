@@ -3,7 +3,7 @@ export class Enemies {
         {
             name: 'enemy',
             lives: 3,
-            speed: 3,
+            speed: 4,
             level: 1,
         }
     ]
